@@ -27,7 +27,7 @@ function Header() {
           </Link>
           <div className="header-actions">
             <a
-              href="https://github.com/your-repo/no-crop-image-FE"
+              href="https://github.com/hiro2k-dev"
               target="_blank"
               rel="noopener noreferrer"
               className="github-link"
