@@ -1,0 +1,167 @@
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.home-hero {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.home-title {
+  font-size: 3.5rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #646cff, #535bf2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  animation: fadeInDown 0.8s ease-out;
+  padding: 1rem;
+}
+
+.home-subtitle {
+  font-size: 1.5rem;
+  color: #888;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.feature-card {
+  background: #FFF;
+  padding: 2.5rem;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 1s ease-out;
+  box-shadow: 0 12px 40px rgba(100, 108, 255, 0.1);
+}
+
+.feature-card:hover {
+  border-color: #646cff;
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(100, 108, 255, 0.3);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #646cff;
+  background: rgba(100, 108, 255, 0.1);
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid rgba(100, 108, 255, 0.3);
+}
+
+.feature-title {
+  font-size: 1.8rem;
+  color: #646cff;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.feature-description {
+  color: #aaa;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.feature-highlights {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.highlight-badge {
+  padding: 0.4rem 0.8rem;
+  background: rgba(100, 108, 255, 0.1);
+  color: #646cff;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  border: 1px solid rgba(100, 108, 255, 0.3);
+}
+
+.home-footer {
+  text-align: center;
+  color: #666;
+  font-size: 1.1rem;
+  margin-top: 2rem;
+  animation: fadeIn 1.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .home-title {
+    font-size: 2.5rem;
+  }
+
+  .home-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-card {
+    padding: 2rem;
+  }
+}
