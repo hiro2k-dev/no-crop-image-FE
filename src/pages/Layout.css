@@ -170,7 +170,7 @@
 /* Layout Buttons */
 .layout-buttons {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 2fr);
   gap: 0.5rem;
 }
 
@@ -355,7 +355,7 @@
 /* Ratio Buttons */
 .ratio-buttons {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(10, 1fr);
   gap: 0.4rem;
 }
 
@@ -419,7 +419,7 @@
 /* Action Buttons */
 .action-buttons {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(10, 1fr);
   gap: 0.5rem;
 }
 
@@ -586,11 +586,11 @@
   }
 
   .layout-buttons {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 2fr);
   }
 
   .ratio-buttons {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(10, 1fr);
   }
 }
 
@@ -630,9 +630,11 @@
     font-size: 0.7rem;
   }
 
-  .layout-buttons,
+  .layout-buttons {
+    grid-template-columns: repeat(3, 2fr);
+  }
   .ratio-buttons {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(10, 2fr);
   }
 
   .layout-button,
