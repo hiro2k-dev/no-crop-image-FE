@@ -74,7 +74,7 @@ function NoCrop() {
   const addFiles = (files) => {
     const fileArray = Array.from(files);
     const remainingSlots = MAX_IMAGES - selectedFiles.length;
-    
+
     if (remainingSlots <= 0) {
       setError(`Maximum ${MAX_IMAGES} images allowed`);
       return;
@@ -176,7 +176,7 @@ function NoCrop() {
     setIsProcessing(true);
     setError(null);
     setResults([]);
-    
+
     const progressArray = selectedFiles.map((f) => ({
       id: f.id,
       stage: 'waiting',
@@ -188,7 +188,7 @@ function NoCrop() {
 
     for (let i = 0; i < selectedFiles.length; i++) {
       const fileObj = selectedFiles[i];
-      
+
       try {
         // Update progress for current file
         setProcessingProgress((prev) =>
@@ -250,7 +250,7 @@ function NoCrop() {
     if (downloadUrl) {
       // downloadUrl is already full path like "/api/process/download/507f1f77bcf86cd799439011"
       const fullUrl = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}${downloadUrl}`;
-      
+
       // Create a temporary link and trigger download
       const link = document.createElement('a');
       link.href = fullUrl;
@@ -263,7 +263,7 @@ function NoCrop() {
 
   const handleDownloadAll = async () => {
     const successResults = results.filter((r) => r.status === 'success' && r.result?.downloadUrl);
-    
+
     if (successResults.length === 0) return;
 
     // Download sequentially with delay to avoid browser blocking
@@ -277,10 +277,8 @@ function NoCrop() {
   };
 
   const handleClearAll = () => {
-    if (window.confirm(`Clear all ${results.length} processed images?`)) {
-      setResults([]);
-      setProcessingProgress([]);
-    }
+    setSelectedFiles([]);
+    setPreviews([]);
   };
 
   const handleReset = () => {
@@ -325,14 +323,14 @@ function NoCrop() {
 
       {results.length === 0 && (
         <>
-          <div 
-            className={`upload-section ${isDragging ? 'dragging' : ''}`}
-            onDragEnter={handleDragEnter}
-            onDragLeave={handleDragLeave}
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
+          <div
+            className={`upload-section ${isDragging ? 'dragging' : ''} ${isProcessing ? 'disabled' : ''}`}
+            onDragEnter={isProcessing ? undefined : handleDragEnter}
+            onDragLeave={isProcessing ? undefined : handleDragLeave}
+            onDragOver={isProcessing ? undefined : handleDragOver}
+            onDrop={isProcessing ? undefined : handleDrop}
           >
-            <div className="upload-area" onClick={handleUploadAreaClick}>
+            <div className="upload-area" onClick={isProcessing ? undefined : handleUploadAreaClick}>
               <div className="upload-icon">+</div>
               <div className="upload-text">
                 {selectedFiles.length > 0
@@ -349,6 +347,7 @@ function NoCrop() {
                 accept="image/jpeg,image/jpg,image/png"
                 multiple
                 onChange={handleFileSelect}
+                disabled={isProcessing}
               />
             </div>
 
@@ -360,8 +359,8 @@ function NoCrop() {
                   return (
                     <div key={fileObj.id} className="file-card">
                       {preview?.url ? (
-                        <div 
-                          className="file-preview" 
+                        <div
+                          className="file-preview"
                           style={{ backgroundColor: bgColor }}
                         >
                           <img src={preview.url} alt={fileObj.name} />
@@ -381,6 +380,7 @@ function NoCrop() {
                         className="file-card-remove"
                         onClick={(e) => handleRemoveFile(fileObj.id, e)}
                         title="Remove"
+                        disabled={isProcessing}
                       >
                         ×
                       </button>
@@ -389,13 +389,18 @@ function NoCrop() {
                 })}
               </div>
             )}
+            {
+              selectedFiles.length > 0 && (<button className="clear-all-button" onClick={handleClearAll}>
+                Clear All
+              </button>)
+            }
           </div>
 
           <div className="controls-section">
             <div className="controls-row">
               <div className="control-group">
                 <label className="control-label">Aspect Ratio</label>
-                <select 
+                <select
                   className="ratio-select"
                   value={ratio}
                   onChange={(e) => setRatio(e.target.value)}
@@ -439,7 +444,7 @@ function NoCrop() {
         </>
       )}
 
-      {isProcessing && (
+      {/* {isProcessing && (
         <div className="processing-section">
           <h3>Processing Images...</h3>
           {processingProgress.map((progress) => {
@@ -462,7 +467,7 @@ function NoCrop() {
             );
           })}
         </div>
-      )}
+      )} */}
 
       {results.length > 0 && (
         <div className="results-section">
@@ -472,27 +477,25 @@ function NoCrop() {
               Processed
             </h2>
             <div className="results-actions">
-              <button 
-                className="download-all-button" 
-                onClick={handleDownloadAll}
-                disabled={results.filter((r) => r.status === 'success').length === 0}
-              >
-                Download All ({results.filter((r) => r.status === 'success').length})
-              </button>
-              <button className="clear-all-button" onClick={handleClearAll}>
-                Clear All
-              </button>
-              <button className="reset-button" onClick={handleReset}>
-                Process More
-              </button>
+              <button
+              className="download-all-button"
+              onClick={handleDownloadAll}
+              disabled={results.filter((r) => r.status === 'success').length === 0}
+            >
+              Download All
+            </button>
+            <button className="reset-button" onClick={handleReset}>
+              Process More
+            </button>
             </div>
+            
           </div>
 
           <div className="results-grid">
             {results.map((result) => {
               const bgColor = getContrastingBackground(color);
               const preview = previews.find((p) => p.id === result.id);
-              
+
               return (
                 <div
                   key={result.id}
@@ -500,7 +503,7 @@ function NoCrop() {
                 >
                   {result.status === 'success' ? (
                     <>
-                      <div 
+                      <div
                         className="result-image-container"
                         style={{ backgroundColor: bgColor }}
                       >
